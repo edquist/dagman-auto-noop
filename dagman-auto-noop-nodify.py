@@ -12,8 +12,6 @@ class EdgeCounts:
 
 def auto_noop_nodify(f, ec):
     for lineno,line in enumerate(f,1):
-        if line.startswith('#') or line == "\n":
-            yield line
         uptokens = line.upper().split()
         if uptokens and uptokens[0] == 'PARENT':
             cidx = uptokens.index('CHILD')
