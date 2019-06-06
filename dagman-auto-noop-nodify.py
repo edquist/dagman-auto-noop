@@ -23,7 +23,7 @@ def auto_noop_nodify(f, ec):
             ec.orig += edges
             if noop_edges < edges:
                 # add extra noop node if it reduces total edges
-                noop = "autonoop.%d" % lineno
+                noop = "_auto_noop_node_%d" % lineno
                 yield "JOB %s noop.sub NOOP\n" % noop
                 yield "PARENT %s CHILD %s\n" % (" ".join(parents), noop)
                 yield "PARENT %s CHILD %s\n" % (noop, " ".join(children))
