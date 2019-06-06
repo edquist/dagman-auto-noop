@@ -11,7 +11,8 @@ class EdgeCounts:
     opt = 0
 
 def auto_noop_nodify(f, ec):
-    for lineno,line in enumerate(f,1):
+    noopno = 0
+    for line in f:
         uptokens = line.upper().split()
         if uptokens and uptokens[0] == 'PARENT':
             cidx = uptokens.index('CHILD')
@@ -23,7 +24,8 @@ def auto_noop_nodify(f, ec):
             ec.orig += edges
             if noop_edges < edges:
                 # add extra noop node if it reduces total edges
-                noop = "_auto_noop_node_%d" % lineno
+                noopno += 1
+                noop = "_condor_join_node_%d" % noopno
                 yield "JOB %s noop.sub NOOP\n" % noop
                 yield "PARENT %s CHILD %s\n" % (" ".join(parents), noop)
                 yield "PARENT %s CHILD %s\n" % (noop, " ".join(children))
